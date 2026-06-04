@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var viewModel: UserListViewModel
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        UserListView(viewModel: viewModel)
     }
 }
 
 #Preview {
-    ContentView()
+    let repo = MockUserRepository()
+    let useCase = GetUsersUseCase(repository: repo)
+    let vm = UserListViewModel(getUsersUseCase: useCase)
+    ContentView(viewModel: vm)
 }
